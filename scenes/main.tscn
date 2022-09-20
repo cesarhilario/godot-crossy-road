@@ -1,9 +1,48 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://lib/lib.res" type="MeshLibrary" id=1]
 [ext_resource path="res://scenes/personagem.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/vida.png" type="Texture" id=3]
 [ext_resource path="res://assets/MADE Florence Sans PERSONAL USE.otf" type="DynamicFontData" id=4]
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends Node
+
+const make_carro1 = preload(\"res://scenes/carro1.tscn\")
+const make_carro2 = preload(\"res://scenes/carro2.tscn\")
+const make_carro3 = preload(\"res://scenes/carro3.tscn\")
+const make_carro4 = preload(\"res://scenes/carro4.tscn\")
+
+func _ready():
+	pass
+
+func _on_spawn1_timeout():	
+	spawnCar(\"pos_carros/carro1\")
+	spawnCar(\"pos_carros/carro2\")
+	spawnCar(\"pos_carros/carro3\")
+	spawnCar(\"pos_carros/carro4\")
+	pass
+
+func spawnCar(local):
+	randomize()
+	
+	var random_number = int(rand_range(0,4))
+	var car = make_carro1
+	
+	if(random_number == 0):
+		car = make_carro1.instance()
+	elif(random_number == 1):
+		car = make_carro2.instance()
+	elif(random_number == 2):
+		car = make_carro3.instance()
+	else:
+		car = make_carro4.instance()
+	
+	get_node(local).add_child(car)
+	get_node(\"pos_carros/spawn1\").wait_time = rand_range(0.5, 2)
+	
+	pass
+"
 
 [sub_resource type="GDScript" id=4]
 script/source = "extends Spatial
@@ -49,6 +88,7 @@ size = 64
 font_data = ExtResource( 4 )
 
 [node name="main" type="Node"]
+script = SubResource( 5 )
 
 [node name="cenario" type="Spatial" parent="."]
 
@@ -135,14 +175,19 @@ transform = Transform( 0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433
 [node name="carro1" type="Position3D" parent="pos_carros"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, 17 )
 
-[node name="carro2" type="Position3D" parent="pos_carros"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, 14 )
-
 [node name="carro3" type="Position3D" parent="pos_carros"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, 0.71988 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, 0.9 )
+
+[node name="carro2" type="Position3D" parent="pos_carros"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 16.5, 2, 14 )
 
 [node name="carro4" type="Position3D" parent="pos_carros"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, -2.85022 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 16.5, 2, -2 )
 
 [node name="trem" type="Position3D" parent="pos_carros"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.805, 2, -12.9374 )
+
+[node name="spawn1" type="Timer" parent="pos_carros"]
+autostart = true
+
+[connection signal="timeout" from="pos_carros/spawn1" to="." method="_on_spawn1_timeout"]
