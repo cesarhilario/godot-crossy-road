@@ -1,0 +1,41 @@
+[gd_scene format=2]
+
+[node name="main" type="Node"]
+
+[node name="cenario" type="Spatial" parent="."]
+
+[node name="GridMap" type="GridMap" parent="cenario"]
+__meta__ = {
+"_editor_clip_": 0
+}
+
+[node name="personagem" type="Spatial" parent="."]
+
+[node name="RigidBody" type="RigidBody" parent="personagem"]
+
+[node name="CollisionShape" type="CollisionShape" parent="personagem/RigidBody"]
+
+[node name="Area" type="Area" parent="personagem"]
+
+[node name="CollisionShape" type="CollisionShape" parent="personagem/Area"]
+
+[node name="placar" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="placar"]
+margin_left = 975.0
+margin_top = 9.0
+margin_right = 1009.0
+margin_bottom = 23.0
+rect_rotation = -0.696631
+
+[node name="pos_camera" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="pos_camera"]
+
+[node name="pos_carros" type="Node" parent="."]
+
+[node name="carro1" type="Position3D" parent="pos_carros"]
+
+[node name="carro2" type="Position3D" parent="pos_carros"]
+
+[node name="trem" type="Position3D" parent="pos_carros"]
