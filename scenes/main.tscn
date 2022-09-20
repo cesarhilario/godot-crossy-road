@@ -1,10 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://lib/lib.res" type="MeshLibrary" id=1]
 [ext_resource path="res://scenes/personagem.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/vida.png" type="Texture" id=3]
+[ext_resource path="res://assets/MADE Florence Sans PERSONAL USE.otf" type="DynamicFontData" id=4]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.443339, 0.833992, 0.490732 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 64
+font_data = ExtResource( 4 )
 
 [node name="main" type="Node"]
 
@@ -41,12 +51,42 @@ shape = SubResource( 1 )
 
 [node name="placar" type="Node2D" parent="."]
 
-[node name="Label" type="Label" parent="placar"]
-margin_left = 975.0
-margin_top = 9.0
-margin_right = 1009.0
-margin_bottom = 23.0
+[node name="pts" type="Label" parent="placar"]
+margin_left = 947.0
+margin_top = 24.0
+margin_right = 981.0
+margin_bottom = 82.0
 rect_rotation = -0.696631
+custom_fonts/font = SubResource( 2 )
+text = "0"
+align = 2
+valign = 1
+
+[node name="cdr" type="Label" parent="placar"]
+margin_left = 575.0
+margin_top = 91.0
+margin_right = 609.0
+margin_bottom = 168.0
+rect_rotation = -0.696631
+custom_fonts/font = SubResource( 3 )
+text = "0"
+align = 1
+valign = 1
+
+[node name="1" type="Sprite" parent="placar"]
+position = Vector2( 65, 61 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+
+[node name="2" type="Sprite" parent="placar"]
+position = Vector2( 161, 62 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+
+[node name="3" type="Sprite" parent="placar"]
+position = Vector2( 252, 62 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
 
 [node name="pos_camera" type="Spatial" parent="."]
 
