@@ -56,7 +56,10 @@ transform = Transform( 0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433
 [node name="pos_carros" type="Node" parent="."]
 
 [node name="carro1" type="Position3D" parent="pos_carros"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, 17 )
 
 [node name="carro2" type="Position3D" parent="pos_carros"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, 14 )
 
 [node name="trem" type="Position3D" parent="pos_carros"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.805, 2, -12.9374 )
