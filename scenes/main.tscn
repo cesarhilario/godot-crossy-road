@@ -190,4 +190,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.805, 2, -12.9374 )
 [node name="spawn1" type="Timer" parent="pos_carros"]
 autostart = true
 
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.144581, -0.809216, -0.569444, 0, -0.575491, 0.817808, -0.989493, 0.118239, 0.0832048, -11.8414, 18.063, 13.3641 )
+light_energy = 0.5
+light_specular = 0.0
+shadow_enabled = true
+
 [connection signal="timeout" from="pos_carros/spawn1" to="." method="_on_spawn1_timeout"]
