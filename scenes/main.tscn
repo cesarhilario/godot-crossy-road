@@ -62,6 +62,7 @@ func spawn_trem():
 func _on_col_personagem_area_entered(area):
 	if(area.name == \"carro\" || area.name == \"trem\"):
 		get_node(\"personagem/RigidBody/anim\").play(\"atropelado\")
+		get_node(\"personagem\").vivo = false
 	pass 
 
 
@@ -73,11 +74,16 @@ func _on_anim_animation_finished(anim_name):
 [sub_resource type="GDScript" id=4]
 script/source = "extends Spatial
 
+var vivo = true;
+
 func _ready():
 	pass
 	
 func _process(delta): 
-	movement()
+	if(vivo):
+		movement()	
+	pass
+	
 pass
 
 func movement():
