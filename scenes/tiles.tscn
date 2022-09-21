@@ -654,5 +654,3 @@ mesh = SubResource( 23 )
 
 [node name="CollisionShape" type="CollisionShape" parent="grama/StaticBody"]
 shape = SubResource( 36 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

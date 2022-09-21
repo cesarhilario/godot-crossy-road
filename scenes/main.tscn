@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://lib/lib.res" type="MeshLibrary" id=1]
 [ext_resource path="res://scenes/personagem.tscn" type="PackedScene" id=2]
@@ -58,6 +58,16 @@ func spawn_trem():
 	get_node(\"pos_carros/trem\").add_child(trem)
 	pass
 
+
+func _on_col_personagem_area_entered(area):
+	if(area.name == \"carro\" || area.name == \"trem\"):
+		get_node(\"personagem/RigidBody/anim\").play(\"atropelado\")
+	pass 
+
+
+func _on_anim_animation_finished(anim_name):
+	print(\"Perdeu uma vida\")
+	pass
 "
 
 [sub_resource type="GDScript" id=4]
@@ -95,6 +105,37 @@ func movement():
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.443339, 0.833992, 0.490732 )
 
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("RigidBody/crossy/player:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.32, 0.32, 0.32 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "atropelado"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("RigidBody/crossy/player:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.32, 0.32, 0.32 ), Vector3( 0.32, 0.15, 0.32 ) ]
+}
+
 [sub_resource type="DynamicFont" id=2]
 size = 48
 font_data = ExtResource( 4 )
@@ -130,17 +171,23 @@ can_sleep = false
 [node name="crossy" parent="personagem/RigidBody" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.526817 )
 
+[node name="player" parent="personagem/RigidBody/crossy" index="0"]
+transform = Transform( 0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 0.0138078, 0.624984, 0.299486 )
+
 [node name="CollisionShape" type="CollisionShape" parent="personagem/RigidBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00326824, 1.03049, -0.0846424 )
 shape = SubResource( 1 )
 
-[node name="col_personagem" type="Area" parent="personagem"]
+[node name="col_personagem" type="Area" parent="personagem/RigidBody"]
 
-[node name="CollisionShape2" type="CollisionShape" parent="personagem/col_personagem"]
+[node name="CollisionShape2" type="CollisionShape" parent="personagem/RigidBody/col_personagem"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00326824, 1.03049, -0.0846424 )
 shape = SubResource( 1 )
 
-[node name="anim" type="AnimationPlayer" parent="personagem"]
+[node name="anim" type="AnimationPlayer" parent="personagem/RigidBody"]
+root_node = NodePath("../..")
+anims/RESET = SubResource( 6 )
+anims/atropelado = SubResource( 7 )
 
 [node name="placar" type="Node2D" parent="."]
 
@@ -184,7 +231,7 @@ texture = ExtResource( 3 )
 [node name="pos_camera" type="Spatial" parent="."]
 
 [node name="Camera" type="Camera" parent="pos_camera"]
-transform = Transform( 1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 16, 26 )
+transform = Transform( 0.945519, -0.209271, 0.2494, 0, 0.766044, 0.642788, -0.325568, -0.607768, 0.724309, 8, 16, 26 )
 
 [node name="pos_carros" type="Node" parent="."]
 
@@ -192,7 +239,7 @@ transform = Transform( 1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, 16.6757 )
 
 [node name="carro3" type="Position3D" parent="pos_carros"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, 0.497763 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, 0.657091 )
 
 [node name="carro2" type="Position3D" parent="pos_carros"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 16.5, 2, 13.3735 )
@@ -216,5 +263,9 @@ light_energy = 0.5
 light_specular = 0.0
 shadow_enabled = true
 
+[connection signal="area_entered" from="personagem/RigidBody/col_personagem" to="." method="_on_col_personagem_area_entered"]
+[connection signal="animation_finished" from="personagem/RigidBody/anim" to="." method="_on_anim_animation_finished"]
 [connection signal="timeout" from="pos_carros/spawn1" to="." method="_on_spawn1_timeout"]
 [connection signal="timeout" from="pos_carros/trem_spawn" to="." method="_on_trem_spawn_timeout"]
+
+[editable path="personagem/RigidBody/crossy"]

@@ -84,8 +84,8 @@ script = ExtResource( 6 )
 [node name="carro4" type="MeshInstance" parent="."]
 mesh = SubResource( 3 )
 
-[node name="Area" type="Area" parent="carro4"]
+[node name="carro" type="Area" parent="carro4"]
 
-[node name="CollisionShape" type="CollisionShape" parent="carro4/Area"]
+[node name="CollisionShape" type="CollisionShape" parent="carro4/carro"]
 transform = Transform( 0.999994, 0, 0.00336848, 0, 1, 0, -0.00336848, 0, 0.999994, 0, 0.467011, 0 )
 shape = SubResource( 4 )

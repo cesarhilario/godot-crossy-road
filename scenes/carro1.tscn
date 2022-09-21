@@ -81,11 +81,11 @@ extents = Vector3( 2.04289, 0.777818, 1 )
 [node name="carro1" type="Spatial"]
 script = ExtResource( 6 )
 
-[node name="carro1" type="MeshInstance" parent="."]
+[node name="carro" type="MeshInstance" parent="."]
 mesh = SubResource( 6 )
 
-[node name="carro" type="Area" parent="carro1"]
+[node name="carro" type="Area" parent="carro"]
 
-[node name="CollisionShape" type="CollisionShape" parent="carro1/carro"]
+[node name="CollisionShape" type="CollisionShape" parent="carro/carro"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.262057, 0 )
 shape = SubResource( 7 )
